@@ -2,10 +2,11 @@ import traceback
 from typing import List
 
 from ..loader.FlowSample.flow_sample_file import FlowSampleFile
+from ..loader.FlowSample.flow_sample_cache import FlowSampleCache
+
 from ..utils.outlier_handler import OutlierHandler
 
 from ..loader.DataSet.BaseDataSet import BaseDataSet
-from ..loader.FlowSample.flow_sample_cache import FlowSampleCache
 from ..loader.DataSet.FileTypeFolderDataSet import FileTypeFolderDataSet
 from ..datastructures.configs.cachedatacreationconfig import CacheDataCreationConfig
 
@@ -45,6 +46,7 @@ class CacheCreator:
         """
         FlowSampleFile.Artifical_gates_defintions = self.config.gate_defintions
         FlowSampleFile.outlier_handler = OutlierHandler(self.config.outlier_handler_config)
+        FlowSampleFile.polygon_points = self.config.polygon_points
         total_count = 0
         blacklist_count = 0
         for dataset in self.datasets:

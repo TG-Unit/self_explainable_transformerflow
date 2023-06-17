@@ -1,21 +1,50 @@
 {
     "type_name": "src.datastructures.configs.cachedatacreationconfig.CacheDataCreationConfig",
-    "output_location": "E:\\Cached-FCM-Data\\train_forced_multi_test",
+    "output_location": "C:/Users/Tanja/Desktop/Masterarbeit/FCM_Cache/",
     "blacklist_path": "",
     "ignore_blacklist": true,
+    "polygon_points" : [20, 8],
     "outlier_handler_config": {
         "n_events_threshold": 300,
         "alpha": 0.00001
     },
     "source_datasets": [
         {
-            "root_path": "E:\\FCM-Data\\ALL\\VIE\\vie14",
-            "dataset_name": "VIE14 ALL"
+            "root_path": "C:/Users/Tanja/Desktop/Masterarbeit/FCM_Data/bln",
+            "dataset_name": "bln",
+            "file_extension": ".analysis"
         },
         {
-            "root_path": "E:\\FCM-Data\\ALL\\Berlin",
-            "dataset_name": "BLN ALL",
-            "file_extension": ".analysis"
+            "root_path": "C:/Users/Tanja/Desktop/Masterarbeit/FCM_Data/bue",
+            "dataset_name": "bue"
+        },
+        {
+            "root_path": "C:/Users/Tanja/Desktop/Masterarbeit/FCM_Data/vie_16-20",
+            "dataset_name": "vie_16-20"
+        },
+        {
+            "root_path": "C:/Users/Tanja/Desktop/Masterarbeit/FCM_Data/vie14",
+            "dataset_name": "vie14"
+        },
+        {
+            "root_path": "C:/Users/Tanja/Desktop/Masterarbeit/FCM_Data/vie14-d33",
+            "dataset_name": "vie14-d33"
+        },
+        {
+            "root_path": "C:/Users/Tanja/Desktop/Masterarbeit/FCM_Data/vie16",
+            "dataset_name": "vie16"
+        },
+        {
+            "root_path": "C:/Users/Tanja/Desktop/Masterarbeit/FCM_Data/vie19",
+            "dataset_name": "vie19"
+        },
+        {
+            "root_path": "C:/Users/Tanja/Desktop/Masterarbeit/FCM_Data/vie20",
+            "dataset_name": "vie20"
+        },
+        {
+            "root_path": "C:/Users/Tanja/Desktop/Masterarbeit/FCM_Data/vie20-d33",
+            "dataset_name": "vie20-d33"
         }
     ],
     "gate_defintions": [

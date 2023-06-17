@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Dict
 import pandas as pd
+import numpy as np
 
 from ...datastructures.Gate import Gate
 
@@ -32,4 +33,8 @@ class FlowSampleBase(ABC):
 
     @abstractmethod
     def get_gate_labels(self) -> pd.DataFrame:
+        pass
+    
+    @abstractmethod
+    def get_polygons_gates(self) -> Dict[int, Dict[str, np.ndarray]]:
         pass  

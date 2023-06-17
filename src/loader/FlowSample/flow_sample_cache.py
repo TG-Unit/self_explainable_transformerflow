@@ -1,7 +1,8 @@
-from typing import List
+from typing import List, Dict
 import pandas as pd
+import numpy as np
 
-from src.loader.IO.pickle_file_handler import PickleFileHandler
+from ...loader.IO.pickle_file_handler import PickleFileHandler
 from ...datastructures.Gate import Gate
 from .flow_sample_file import FlowSampleFile
 from .flow_sample_base import FlowSampleBase
@@ -22,6 +23,8 @@ class FlowSampleCache(FlowSampleBase):
         flowsamplecache.name = flowsample_file.get_sample_name()
         flowsamplecache.filename = flowsample_file.get_sample_file_name()
         flowsamplecache.convex_gates = flowsample_file.get_convex_gates()
+        flowsamplecache.polygons_gates = flowsample_file.get_polygons_gates()
+
 
         return flowsamplecache
 
@@ -48,7 +51,7 @@ class FlowSampleCache(FlowSampleBase):
         pklFilehandler = PickleFileHandler(path)
         pklFilehandler.save_obj_as_pickle(self)
 
-    # Region [FlowSampleBase implementation]
+    # region [FlowSampleBase implementation]
 
     def get_events(self) -> pd.DataFrame:
         return self.events
@@ -67,5 +70,9 @@ class FlowSampleCache(FlowSampleBase):
 
     def get_convex_gates(self) -> List[Gate]:
         return self.convex_gates
+
+    def get_polygons_gates(self) -> Dict[int, Dict[str, np.ndarray]]:
+        return self.polygons_gates
+
 
     # endregion

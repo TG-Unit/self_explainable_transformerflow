@@ -7,7 +7,7 @@ from src.pipeline.CacheCreation import CacheCreator
 configParser = JSONConfigParser()
 
 
-config = configParser.parse_config_from_file(Path(".\config\\cachecreation\\cache_creation_vie14_bln.json"))
+config = configParser.parse_config_from_file(Path(".\config\\cachecreation\\cache_creation_vie14.json"))
 
 print(config)
 

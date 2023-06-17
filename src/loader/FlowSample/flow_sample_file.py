@@ -1,4 +1,10 @@
-from typing import List, Tuple
+from typing import List, Tuple, Dict
+from pathlib import Path
+import pandas as pd
+import numpy as np
+import cv2 as cv
+from copy import deepcopy
+
 from ...datastructures.ArtificalGateDefinition import ArtificalGateDefinition
 
 from ...utils.convex_hull_handler import convex_hull
@@ -7,17 +13,15 @@ from ...utils.outlier_handler import OutlierHandler
 from ..GateCollection import GateCollection
 from .flow_sample_base import FlowSampleBase
 from ...datastructures.Gate import Gate
-from pathlib import Path
-import pandas as pd
 from ..IO.flowfileloader import FlowFileLoader
 from ..MarkerCollection import MarkerCollection
-import numpy as np
 
 
 class FlowSampleFile(FlowSampleBase):
 
     Artifical_gates_defintions : List[ArtificalGateDefinition] = []
     outlier_handler : OutlierHandler = None
+    polygon_points : List[int] = [20]
 
     def __init__(self, file_path: Path) -> None:
         super().__init__()
@@ -36,7 +40,7 @@ class FlowSampleFile(FlowSampleBase):
         return metadata.gate_polygons
 
 
-# Region [FlowSampleBase implementation]
+# region [FlowSampleBase implementation]
 
     def get_gates(self) -> List[Gate]:
 
@@ -95,6 +99,31 @@ class FlowSampleFile(FlowSampleBase):
 
     def get_sample_file_name(self) -> str:
         return self.sample_filename
+
+    def get_polygons_gates(self) -> Dict[int, Dict[str, np.ndarray]]:
+        convex_gates = self.get_convex_gates()
+
+        result = {}
+        for points in FlowSampleFile.polygon_points:
+            result[points] = {}
+
+        for gate in convex_gates:
+            for bbox_size in FlowSampleFile.polygon_points:
+                poly = deepcopy(gate.polygon)
+                while len(poly) < bbox_size:
+                    l = len(poly)
+                    distances = [np.linalg.norm(poly[i]-poly[(i+1)%l]) for i in range(l)]
+                    maxIdx = np.argmax(distances)
+                    newPoint = (poly[maxIdx] + poly[(maxIdx+1)%l])/2
+                    poly = np.insert(poly, maxIdx+1, newPoint, axis=0)
+                while len(poly) > bbox_size:
+                    l = len(poly)
+                    areas = [cv.contourArea(np.array([poly[(i-1)%l], poly[i], poly[(i+1)%l]])) for i in range(l)]
+                    minArea = np.argmin(areas)
+                    poly = np.delete(poly, minArea, axis=0)
+                result[bbox_size][gate.name] = poly
+
+        return result
 
 
 # endregion
